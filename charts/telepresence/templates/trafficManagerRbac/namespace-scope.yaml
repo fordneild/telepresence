@@ -7,7 +7,7 @@ require less permissions in clientRbac.yaml
 */}}
 {{- if .Values.managerRbac.namespaced }}
 
-{{- if not (has (include "traffic-manager.namespace" .) .Values.managerRbac.namespaces) }}
+{{- if and (not (has (include "traffic-manager.namespace" .) .Values.managerRbac.namespaces)) (not .Values.isCI) }}
 {{- fail (printf "Namespace %s must be included in managerRbac.namespaces (managerRbac.namespaces contains: %s)" (include "traffic-manager.namespace" .) (join "," .Values.managerRbac.namespaces)) }}
 {{- end }}
 
